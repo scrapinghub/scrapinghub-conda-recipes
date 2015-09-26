@@ -1,0 +1,58 @@
+package:
+  name: scrapy
+  version: "1.0.3"
+
+source:
+  fn: Scrapy-1.0.3.tar.gz
+  url: https://pypi.python.org/packages/source/S/Scrapy/Scrapy-1.0.3.tar.gz
+  md5: cefb981076a26112d6f9b76cb7e5ba7d
+  patches:
+    # We have to disable service_identity as it's not available in the default
+    # conda channel.
+    - 01-service_identity.patch
+
+build:
+  entry_points:
+    - scrapy = scrapy.cmdline:execute
+
+  number: 0
+
+requirements:
+  build:
+    - python
+    - setuptools
+    - twisted >=10.0.0
+    - w3lib >=1.8.0
+    - queuelib
+    - lxml
+    - pyopenssl
+    - cssselect >=0.9
+    - six >=1.5.2
+    # Not available in conda.
+    #- service_identity
+
+  run:
+    - python
+    - twisted >=10.0.0
+    - w3lib >=1.8.0
+    - queuelib
+    - lxml
+    - pyopenssl
+    - cssselect >=0.9
+    - six >=1.5.2
+    # Not available in conda.
+    #- service_identity
+
+test:
+  imports:
+    - scrapy
+
+  commands:
+    # Ideally, we will run tests here but we require to provide the tests
+    # requirements first.
+    - scrapy bench
+
+about:
+  home: http://scrapy.org
+  license: BSD License
+  summary: 'A high-level Web Crawling and Web Scraping framework'

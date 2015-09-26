@@ -1,0 +1,25 @@
+From 806fa8aede185bece96fc6eca39f01b3c89f24df Mon Sep 17 00:00:00 2001
+From: Rolando Espinoza <darkrho@gmail.com>
+Date: Fri, 25 Sep 2015 22:34:06 -0400
+Subject: [PATCH] Removed optional service_identity as it's not available in
+ conda.
+
+---
+ setup.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git setup.py.orig setup.py
+index 0e99e79..5a7fad9 100644
+--- setup.py.orig
++++ setup.py
+@@ -44,6 +44,6 @@ setup(
+         'pyOpenSSL',
+         'cssselect>=0.9',
+         'six>=1.5.2',
+-        'service_identity',
++        #'service_identity',
+     ],
+ )
+-- 
+2.4.6
+
