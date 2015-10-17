@@ -1,0 +1,34 @@
+language: python
+python: 2.7
+
+env:
+  global:
+    # TODO: Build all *changed* packages.
+    - CONDA_PACKAGE=scrapy
+    - CONDA_USER=Scrapinghub
+    - CONDA_CHANNEL=dev
+    - CONDA_PLATFORM=linux-64
+    - CONDA_HOME=$HOME/miniconda
+    - CONDA_BUILDS=$CONDA_HOME/conda-bld
+    - BUILD_OUTPUT=$HOME/build
+    - PUBLISH_BRANCH=master
+    - secure: "XZNL110y8pN6qntp0ZwsseFKVpaianmAJkA40/4PURbfBeS/ecItyCzJYlcMMIahXek/w+jDaEnJN58xcOeD5XjCxAy3JqtmvAAwxpZw4LHJrtT1UEMvipA5F258gv8lGPpyXMYjLPFnCaMF8KDCKa9xhG7T/2Ye0ufzHYO16EfcEvKfr2tjq94Ks3NKYGFBLqF54QlKj0cbQ/c85gW1yxzyFwJuPj5P/lvnJSuI52NwhwxPvjX/9E0S30atTCeCnb3bxPQ0jaEhxphpdmAcNZBW5xCMByTdJ0v5li+EXWr3hQIRjeRj3EOBWySLKObb1/cF1C3494RQ8WGRH0Cfj5WAja/CYZtpp0wp0EwdNFiQl33PySVnTkjJk0DHbDgdUd1sq4e5/9wc0APOWaDT7QPvZo2JBKj+gcbh++I83ttKP1DoP8yCSOHnD9cWHkekx8PCeIHPl3x6LNQVMQ/ZW5u6QG4Fir7tO4fa/ke9nT9B6UvbJ8AL+vThNpsGGH+c3cLLpuVRxAzZmX5OHuvErzSYKFCd0CYSTMHdWp4A04w2/4ZdEppETcU2NUGYKrX7O27dspP8+lPgfh6zo/r/rQ8WNGTMR+E6qH8Ltr3XI7tpoarlti9PPliNBEB9M11UPoGeOsl7ET4QzQCySK8Y17RznB8omTUvHvdzqjz0wTo="
+
+install:
+  - wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
+  - bash miniconda.sh -b -p $CONDA_HOME
+  - export PATH="$CONDA_HOME/bin:$PATH"
+  - conda config --set always_yes yes
+  - conda config --set show_channel_urls yes
+  - conda config --add channels $CONDA_USER
+  - conda clean --tarballs
+  - conda update -q conda
+  - conda install -q conda-build anaconda-client
+  - conda info -a
+
+script:
+  - conda build $CONDA_PACKAGE
+  - conda convert -q -p all $CONDA_BUILDS/$CONDA_PLATFORM/*.tar.bz2 -o $BUILD_OUTPUT
+
+after_success:
+  - test "$TRAVIS_BRANCH" = "$PUBLISH_BRANCH" && anaconda -t $ANACONDA_TOKEN upload -u $CONDA_USER -c $CONDA_CHANNEL --force $BUILD_OUTPUT/*/*.tar.bz2
