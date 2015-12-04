@@ -38,6 +38,12 @@ script:
     else
       echo "Building: $TARGET_PACKAGES"
       scripts/build-packages.sh $BUILD_OUTPUT $TARGET_PACKAGES || exit $?
+      # Given we convert the scrapy package from linux-* to win-*, the
+      # conditional dependencies for win-* are not included in the package,
+      # namely pywin32. So we hack the packages to include those packages.
+      for PKG in $BUILD_OUTPUT/win-*/scrapy-*.tar.bz2; do
+        python scripts/conda-add-dep.py $PKG pywin32
+      done
     fi
 
 after_success:
