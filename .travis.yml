@@ -3,58 +3,36 @@ python: 2.7
 
 env:
   global:
+    - PATH=$HOME/miniconda/bin:$PATH
     - CONDA_HOME=$HOME/miniconda
     - BUILD_OUTPUT=$HOME/builds
-    # By default use the repository owner as conda user.
-    - CONDA_USER=$(dirname $TRAVIS_REPO_SLUG)
-    # We upload to dev channel, these packages should be promoted to main
-    # channel manually.
-    - CONDA_CHANNEL=dev
-    # Travis provides free linux-64 containers, we use it as a base platform to
-    # convert the packages to other platforms.
-    - CONDA_PLATFORM=linux-64
-    - PUBLISH_BRANCH=master
-    # Scrapinghub's ANACONDA_TOKEN encrypted value.
-    - secure: "XZNL110y8pN6qntp0ZwsseFKVpaianmAJkA40/4PURbfBeS/ecItyCzJYlcMMIahXek/w+jDaEnJN58xcOeD5XjCxAy3JqtmvAAwxpZw4LHJrtT1UEMvipA5F258gv8lGPpyXMYjLPFnCaMF8KDCKa9xhG7T/2Ye0ufzHYO16EfcEvKfr2tjq94Ks3NKYGFBLqF54QlKj0cbQ/c85gW1yxzyFwJuPj5P/lvnJSuI52NwhwxPvjX/9E0S30atTCeCnb3bxPQ0jaEhxphpdmAcNZBW5xCMByTdJ0v5li+EXWr3hQIRjeRj3EOBWySLKObb1/cF1C3494RQ8WGRH0Cfj5WAja/CYZtpp0wp0EwdNFiQl33PySVnTkjJk0DHbDgdUd1sq4e5/9wc0APOWaDT7QPvZo2JBKj+gcbh++I83ttKP1DoP8yCSOHnD9cWHkekx8PCeIHPl3x6LNQVMQ/ZW5u6QG4Fir7tO4fa/ke9nT9B6UvbJ8AL+vThNpsGGH+c3cLLpuVRxAzZmX5OHuvErzSYKFCd0CYSTMHdWp4A04w2/4ZdEppETcU2NUGYKrX7O27dspP8+lPgfh6zo/r/rQ8WNGTMR+E6qH8Ltr3XI7tpoarlti9PPliNBEB9M11UPoGeOsl7ET4QzQCySK8Y17RznB8omTUvHvdzqjz0wTo="
+    # By default use the repository owner as anaconda user.
+    - ANACONDA_USER="${ANACONDA_USER:-$(dirname $TRAVIS_REPO_SLUG)}"
+    # By default we upload to dev label.
+    - ANACONDA_LABEL="${ANACONDA_LABEL:-dev}"
+    # The token variable should be set via project settings.
+    - ANACONDA_TOKEN="${ANACONDA_TOKEN:-}"
 
-install:
-  - scripts/setup-conda.sh $CONDA_HOME
+  matrix:
+    # We can't use major/minor conda-buildall combination as we want only 2.7 and 3.{4,5}.
+    - CONDA_PY=27 CONDA_BUILDALL_MATRIX="python 2.7.*"
+    # Uncomment the lines below once we start building Scrapy 1.1.
+    #- CONDA_PY=34 CONDA_BUILDALL_MATRIX="python 3.4.*"
+    #- CONDA_PY=35 CONDA_BUILDALL_MATRIX="python 3.5.*"
 
-before_script:
-  - source $CONDA_HOME/bin/activate root
-  - conda config --set always_yes yes
-  - conda config --set show_channel_urls yes
-  - conda config --add channels $CONDA_USER
-  - conda info -a
+install: scripts/conda-setup.sh
 
-script:
-  # We can't use TRAVIS_COMMIT_RANGE as it may contain invalid references.
-  # See https://github.com/travis-ci/travis-ci/issues/2666
-  - TARGET_PACKAGES=$(scripts/modified-packages.sh $TRAVIS_COMMIT_RANGE || scripts/modified-packages.sh ${TRAVIS_COMMIT}^1...${TRAVIS_COMMIT})
-  - |
-    if [ -z "$TARGET_PACKAGES" ]; then
-      echo "Nothing to build"
-      exit 0
-    else
-      echo "Building: $TARGET_PACKAGES"
-      scripts/build-packages.sh $BUILD_OUTPUT $TARGET_PACKAGES || exit $?
-      # Given we convert the scrapy package from linux-* to win-*, the
-      # conditional dependencies for win-* are not included in the package,
-      # namely pywin32. So we hack the packages to include those packages.
-      shopt -s nullglob   # avoid breaking the glob below finds  nothing.
-      for PKG in $BUILD_OUTPUT/win-*/scrapy-*.tar.bz2; do
-        python scripts/conda-add-dep.py $PKG pywin32
-      done
-    fi
+script: scripts/conda-build-all.sh
 
 after_success:
-  # At the moment, I couldn't make it work the deploy with the "script"
-  # provider. So we deploy here when PUBLISH_BRANCH branch is being built.
-  # Note that TRAVIS_BRANCH is "master" on pull requests..
+  # We anaconda token is available, we attempt to upload to the specified
+  # channel. This *MUST* not be executed on PRs.
   - |
-    if [ $TRAVIS_BRANCH == $PUBLISH_BRANCH -a $TRAVIS_PULL_REQUEST == "false" ]; then
-      echo "Uploading packages to $CONDA_USER/$CONDA_CHANNEL"
-      for TARBALL in $BUILD_OUTPUT/{linux,win,osx}-*/*.tar.bz2; do
-        anaconda -t $ANACONDA_TOKEN upload -u $CONDA_USER -c $CONDA_CHANNEL --force $TARBALL || exit 1
-      done
+    if [ ! -z "$ANACONDA_TOKEN" -a $TRAVIS_PULL_REQUEST = "false" ]; then
+      scripts/conda-publish.sh || exit 1
     fi
+
+notifications:
+  email:
+    on_success: never
+    on_failure: always
