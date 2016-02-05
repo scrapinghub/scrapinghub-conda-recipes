@@ -1,0 +1,33 @@
+package:
+  name: parsel
+  version: "1.0.1"
+
+source:
+  fn: parsel-1.0.1.tar.gz
+  url: https://pypi.python.org/packages/source/p/parsel/parsel-1.0.1.tar.gz
+  md5: 552f8d7e3267d331134f70c694a2bfb0
+
+requirements:
+  build:
+    - python
+    - setuptools
+    - w3lib >=1.8.0
+    - lxml
+    - six >=1.5.2
+    - cssselect >=0.9
+
+  run:
+    - python
+    - w3lib >=1.8.0
+    - lxml
+    - six >=1.5.2
+    - cssselect >=0.9
+
+test:
+  imports:
+    - parsel
+
+about:
+  home: https://github.com/scrapy/parsel
+  license: BSD License
+  summary: 'Parsel is a library to extract data from HTML and XML using XPath and CSS selectors'
