@@ -23,7 +23,7 @@ else
   exit 1
 fi
 
-if [ ! -d $CONDA_HOME ]; then
+if [ ! -f $CONDA_HOME/bin/conda ]; then
   wget -q https://repo.continuum.io/miniconda/Miniconda-latest-${CONDA_OS}-${OS_ARCH}.sh -O /tmp/miniconda.sh
   bash /tmp/miniconda.sh -b -f -p $CONDA_HOME
   rm -f /tmp/miniconda.sh
