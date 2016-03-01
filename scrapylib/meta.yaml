@@ -1,0 +1,65 @@
+package:
+  name: scrapylib
+  version: "1.7.0"
+
+source:
+  fn: scrapylib-1.7.0.tar.gz
+  url: https://pypi.python.org/packages/source/s/scrapylib/scrapylib-1.7.0.tar.gz
+  md5: d1400ef04f107cb72afae6072904ff3a
+#  patches:
+   # List any patch files here
+   # - fix.patch
+
+# build:
+  # noarch_python: True
+  # preserve_egg_dir: True
+  # entry_points:
+    # Put any entry points (scripts to be generated automatically) here. The
+    # syntax is module:function.  For example
+    #
+    # - scrapylib = scrapylib:main
+    #
+    # Would create an entry point called scrapylib that calls scrapylib.main()
+
+
+  # If this is a new build for the same version, increment the build
+  # number. If you do not include this key, it defaults to 0.
+  # number: 1
+
+requirements:
+  build:
+    - python
+    - setuptools
+    - scrapy >=0.22.0
+
+  run:
+    - python
+    - scrapy >=0.22.0
+
+test:
+  # Python imports
+  imports:
+    - scrapylib
+    - scrapylib.constraints
+    - scrapylib.processors
+
+  # commands:
+    # You can put test commands to be run here.  Use this to test that the
+    # entry points work.
+
+
+  # You can also put a file called run_test.py in the recipe that will be run
+  # at test time.
+
+  # requires:
+    # Put any additional test requirements here.  For example
+    # - nose
+
+about:
+  home: http://github.com/scrapinghub/scrapylib
+  license: BSD License
+  summary: 'Scrapy helper functions and processors'
+
+# See
+# http://docs.continuum.io/conda/build.html for
+# more information about meta.yaml
