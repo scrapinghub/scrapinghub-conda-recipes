@@ -1,11 +1,11 @@
 package:
   name: scrapy
-  version: "1.1.0rc1"
+  version: "1.1.0rc3"
 
 source:
-  fn: Scrapy-1.1.0rc1.tar.gz
-  url: https://pypi.python.org/packages/source/S/Scrapy/Scrapy-1.1.0rc1.tar.gz
-  md5: 79dad4579baf08589d3c69bba611328b
+  fn: Scrapy-1.1.0rc3.tar.gz
+  url: https://pypi.python.org/packages/source/S/Scrapy/Scrapy-1.1.0rc3.tar.gz
+  md5: 8fcd0ba400c685f14e530fc9c20894c1
 
 build:
   entry_points:
