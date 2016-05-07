@@ -25,7 +25,13 @@ conda buildall $TRAVIS_BUILD_DIR --matrix-conditions "$CONDA_BUILDALL_MATRIX"
 for META in $TRAVIS_BUILD_DIR/*/meta.yaml; do
   PACKAGE_DIR=$(dirname $META)
   PACKAGE_FILENAME=$(conda build --output $PACKAGE_DIR)
-  conda convert -q -p all -o $BUILD_OUTPUT $PACKAGE_FILENAME || exit 1
+  # Packages may have been skipped due to skip build flag.
+  if [[ $PACKAGE_FILENAME == Skipped* ]]; then
+    echo "Skipped $(basename $PACKAGE_DIR)"
+  else
+    echo "Converting $PACKAGE_FILENAME to all platforms)"
+    conda convert -q -p all -o $BUILD_OUTPUT $PACKAGE_FILENAME || exit 1
+  fi
 done
 
 # Given we convert the scrapy package from linux-* to win-*, the

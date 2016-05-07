@@ -1,16 +1,17 @@
 package:
   name: hubstorage
-  version: "0.22.0"
+  # The version 0.23 (unreleased) supports py3k which is required for to build
+  # other packages for py3k (i.e. shub).
+  version: "0.23.0a1"
 
 source:
   fn: hubstorage-0.22.0.tar.gz
   url: https://pypi.python.org/packages/source/h/hubstorage/hubstorage-0.22.0.tar.gz
   md5: b6a1801bd713caea671f7766f370058a
-#  patches:
-   # List any patch files here
-   # - fix.patch
+  patches:
+    - hubstorage-0.23.0-alpha.patch
 
-# build:
+build:
   # noarch_python: True
   # preserve_egg_dir: True
   # entry_points:
@@ -24,19 +25,21 @@ source:
 
   # If this is a new build for the same version, increment the build
   # number. If you do not include this key, it defaults to 0.
-  # number: 1
+  number: 0
 
 requirements:
   build:
-    - python
+    - python x.x
     - setuptools
     - requests
     - retrying >=1.3.3
+    - six >=1.10.0
 
   run:
-    - python
+    - python x.x
     - requests
     - retrying >=1.3.3
+    - six >=1.10.0
 
 test:
   # Python imports

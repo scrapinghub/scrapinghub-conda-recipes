@@ -9,7 +9,7 @@ source:
 
 requirements:
   build:
-    - python
+    - python x.x
     - setuptools
     - w3lib >=1.8.0
     - lxml
@@ -17,7 +17,7 @@ requirements:
     - cssselect >=0.9
 
   run:
-    - python
+    - python x.x
     - w3lib >=1.8.0
     - lxml
     - six >=1.5.2

@@ -12,7 +12,7 @@ build:
 
 requirements:
   build:
-    - python
+    - python x.x
     - setuptools
     - characteristic >=14.0.0
     - pyasn1
@@ -20,7 +20,7 @@ requirements:
     - pyopenssl >=0.12
 
   run:
-    - python
+    - python x.x
     - characteristic >=14.0.0
     - pyasn1
     - pyasn1-modules

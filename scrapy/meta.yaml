@@ -11,11 +11,13 @@ build:
   entry_points:
     - scrapy = scrapy.cmdline:execute
 
+  skip: True  # [py3k]
+
   number: 0
 
 requirements:
   build:
-    - python
+    - python x.x
     - twisted >=10.0.0
     - w3lib >=1.8.0
     - queuelib
@@ -24,10 +26,10 @@ requirements:
     - cssselect >=0.9
     - six >=1.5.2
     - service_identity
-    - pywin32  [win]
+    - pywin32  # [win]
 
   run:
-    - python
+    - python x.x
     - twisted >=10.0.0
     - w3lib >=1.8.0
     - queuelib
@@ -36,7 +38,7 @@ requirements:
     - cssselect >=0.9
     - six >=1.5.2
     - service_identity
-    - pywin32  [win]
+    - pywin32  # [win]
 
 test:
   imports:
