@@ -32,6 +32,27 @@ def patch_binstar_upload():
     binstar_client.utils.input = auto_input
 
 
-if __name__ == "__main__":
+def process_args(args):
+    while args:
+        token = args.pop(0)
+        # For labels, handle comma-separated list automatically. That is, repeat
+        # the parameter for each value. This to ease overriding channels via
+        # single argument.
+        if token in ['-l', '-c']:
+            labels = args.pop(0).split(',')
+            for lab in labels:
+                yield token
+                yield lab
+        else:
+            yield token
+
+
+def main():
     patch_binstar_upload()
+
+    sys.argv = list(process_args(sys.argv))
     sys.exit(anaconda_cli.main())
+
+
+if __name__ == "__main__":
+    main()
