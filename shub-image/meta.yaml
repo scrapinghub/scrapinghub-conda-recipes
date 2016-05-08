@@ -13,7 +13,7 @@ build:
   skip: True  # [py3k]
   entry_points:
     - shub-image = shub_image.tool:cli
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -24,6 +24,8 @@ requirements:
     - six
     - shub
     - ruamel_yaml
+    - docker-py >=1.7.0
+    - scrapy
 
   run:
     - python x.x
@@ -32,6 +34,8 @@ requirements:
     - six
     - shub
     - ruamel_yaml
+    - docker-py >=1.7.0
+    - scrapy
 
 test:
   imports:
