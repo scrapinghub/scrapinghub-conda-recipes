@@ -1,32 +1,20 @@
 package:
   name: shub
-  version: "1.5.0"
+  version: "2.1.1"
 
 source:
-  fn: shub-1.5.0.tar.gz
-  url: https://pypi.python.org/packages/source/s/shub/shub-1.5.0.tar.gz
-  md5: 05c6058959a1dd9985367f9381f8c1e5
-#  patches:
-   # List any patch files here
-   # - fix.patch
+  fn: shub-2.1.1.tar.gz
+  url: https://pypi.python.org/packages/ca/2f/344c75a43cae26fe6822d8e477d06940f45dffbd4cf880081221a6607f9c/shub-2.1.1.tar.gz
+  md5: 1a8dd60c6a4dc571b43e8e2320a468b0
+  patches:
+    # We use anaconda's ruamel_yaml and provide a compatiblity patch.
+    - ruamel-yaml-compat.patch
 
 build:
   skip: True  # [py3k]
-  # noarch_python: True
-  # preserve_egg_dir: True
   entry_points:
-    # Put any entry points (scripts to be generated automatically) here. The
-    # syntax is module:function.  For example
-    #
-    # - shub = shub:main
-    #
-    # Would create an entry point called shub that calls shub.main()
-
     - shub = shub.tool:cli
-
-  # If this is a new build for the same version, increment the build
-  # number. If you do not include this key, it defaults to 0.
-  # number: 1
+  number: 0
 
 requirements:
   build:
@@ -37,6 +25,7 @@ requirements:
     - six
     - hubstorage
     - scrapinghub
+    - ruamel_yaml
 
   run:
     - python x.x
@@ -45,25 +34,14 @@ requirements:
     - six
     - hubstorage
     - scrapinghub
+    - ruamel_yaml
 
 test:
-  # Python imports
   imports:
     - shub
 
   commands:
-    # You can put test commands to be run here.  Use this to test that the
-    # entry points work.
-
     - shub --help
-
-  # You can also put a file called run_test.py in the recipe that will be run
-  # at test time.
-
-  requires:
-    - mock
-    # Put any additional test requirements here.  For example
-    # - nose
 
 about:
   home: http://doc.scrapinghub.com/shub.html
