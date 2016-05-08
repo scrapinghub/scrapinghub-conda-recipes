@@ -1,0 +1,50 @@
+package:
+  name: shub-image
+  version: "0.2.1"
+
+source:
+  fn: shub-image-0.2.1.tar.gz
+  url: https://github.com/scrapinghub/shub-image/archive/v0.2.1.tar.gz
+  md5: 94bf35982fd1ad6947e2bce8cbb59614
+  patches:
+    - ruamel-yaml-compat.patch
+
+build:
+  skip: True  # [py3k]
+  entry_points:
+    - shub-image = shub_image.tool:cli
+  number: 0
+
+requirements:
+  build:
+    - python x.x
+    - setuptools
+    - click
+    - requests
+    - six
+    - shub
+    - ruamel_yaml
+
+  run:
+    - python x.x
+    - click
+    - requests
+    - six
+    - shub
+    - ruamel_yaml
+
+test:
+  imports:
+    - shub_image
+
+  commands:
+    - shub-image --help
+
+about:
+  home: http://shub-image.readthedocs.io/en/latest/
+  license: BSD License
+  summary: 'Scrapinghub release tool'
+
+# See
+# http://docs.continuum.io/conda/build.html for
+# more information about meta.yaml
