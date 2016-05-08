@@ -1,5 +1,6 @@
 language: python
 python: 2.7
+sudo: false
 
 env:
   global:
@@ -33,6 +34,10 @@ after_success:
     if [ ! -z "$ANACONDA_TOKEN" -a $TRAVIS_PULL_REQUEST = "false" ]; then
       scripts/conda-publish.sh || exit 1
     fi
+
+cache:
+  directories:
+    - ~/miniconda
 
 notifications:
   email:
