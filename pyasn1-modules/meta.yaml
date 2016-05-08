@@ -15,12 +15,12 @@ build:
 
 requirements:
   build:
-    - python
+    - python x.x
     - setuptools
     - pyasn1 >=0.1.4
 
   run:
-    - python
+    - python x.x
     - pyasn1 >=0.1.4
 
 test:

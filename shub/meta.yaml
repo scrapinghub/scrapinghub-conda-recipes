@@ -11,6 +11,7 @@ source:
    # - fix.patch
 
 build:
+  skip: True  # [py3k]
   # noarch_python: True
   # preserve_egg_dir: True
   entry_points:
@@ -29,7 +30,7 @@ build:
 
 requirements:
   build:
-    - python
+    - python x.x
     - setuptools
     - click
     - requests
@@ -38,7 +39,7 @@ requirements:
     - scrapinghub
 
   run:
-    - python
+    - python x.x
     - click
     - requests
     - six

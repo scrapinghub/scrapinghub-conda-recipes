@@ -28,12 +28,12 @@ source:
 
 requirements:
   build:
-    - python
+    - python x.x
     - setuptools
     - six >=1.7.0
 
   run:
-    - python
+    - python x.x
     - six >=1.7.0
 
 # test:

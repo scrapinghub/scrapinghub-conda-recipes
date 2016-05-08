@@ -17,8 +17,8 @@ env:
     # We can't use major/minor conda-buildall combination as we want only 2.7 and 3.{4,5}.
     - CONDA_PY=27 CONDA_BUILDALL_MATRIX="python 2.7.*"
     # Uncomment the lines below once we start building Scrapy 1.1.
-    #- CONDA_PY=34 CONDA_BUILDALL_MATRIX="python 3.4.*"
-    #- CONDA_PY=35 CONDA_BUILDALL_MATRIX="python 3.5.*"
+    - CONDA_PY=34 CONDA_BUILDALL_MATRIX="python 3.4.*"
+    - CONDA_PY=35 CONDA_BUILDALL_MATRIX="python 3.5.*"
 
 install: scripts/conda-setup.sh
 

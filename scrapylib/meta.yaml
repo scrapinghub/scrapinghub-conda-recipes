@@ -10,7 +10,7 @@ source:
    # List any patch files here
    # - fix.patch
 
-# build:
+build:
   # noarch_python: True
   # preserve_egg_dir: True
   # entry_points:
@@ -24,16 +24,17 @@ source:
 
   # If this is a new build for the same version, increment the build
   # number. If you do not include this key, it defaults to 0.
-  # number: 1
+  number: 0
+  skip: True  # [py3k]
 
 requirements:
   build:
-    - python
+    - python x.x
     - setuptools
     - scrapy >=0.22.0
 
   run:
-    - python
+    - python x.x
     - scrapy >=0.22.0
 
 test:

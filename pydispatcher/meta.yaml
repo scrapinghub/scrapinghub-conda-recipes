@@ -9,11 +9,11 @@ source:
 
 requirements:
   build:
-    - python
+    - python x.x
     - setuptools
 
   run:
-    - python
+    - python x.x
 
 test:
   imports:

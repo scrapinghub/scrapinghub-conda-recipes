@@ -12,10 +12,10 @@ build:
 
 requirements:
   build:
-    - python
+    - python x.x
 
   run:
-    - python
+    - python x.x
 
 test:
   imports:

@@ -28,12 +28,12 @@ source:
 
 requirements:
   build:
-    - python
+    - python x.x
     - setuptools
     - requests
 
   run:
-    - python
+    - python x.x
     - requests
 
 # test:
