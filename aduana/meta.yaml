@@ -1,0 +1,61 @@
+package:
+  name: aduana
+  version: "0.2.2"
+
+source:
+  fn: aduana-0.2.2.zip
+  url: https://codeload.github.com/scrapinghub/aduana/zip/2703513c687dba4208dc2146d106495d2ee63d09
+  md5: e642d8f973f1dbdee1284f2bee426e16
+#  patches:
+   # List any patch files here
+   # - fix.patch
+
+build:
+  skip: True  # [py3k]
+  number: 0
+
+requirements:
+  build:
+    - python
+    - setuptools
+    - gevent
+    - falcon <1.0
+    - talons
+    - requests
+    - pyopenssl
+    - cffi
+    - pbr >=0.5.23
+
+  run:
+    - python
+    - gevent
+    - falcon <1.0
+    - talons
+    - requests
+    - pyopenssl
+
+test:
+  # Python imports
+  imports:
+    - aduana
+
+  # commands:
+    # You can put test commands to be run here.  Use this to test that the
+    # entry points work.
+
+
+  # You can also put a file called run_test.py in the recipe that will be run
+  # at test time.
+
+  # requires:
+    # Put any additional test requirements here.  For example
+    # - nose
+
+about:
+  home: https://github.com/scrapinghub/aduana
+  license: BSD License
+  summary: 'Bindings for Aduana library'
+
+# See
+# http://docs.continuum.io/conda/build.html for
+# more information about meta.yaml
