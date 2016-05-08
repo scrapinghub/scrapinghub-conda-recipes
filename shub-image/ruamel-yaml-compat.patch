@@ -1,0 +1,13 @@
+diff --git shub_image/utils.py shub_image/utils.py
+index b460117..31fd8e7 100644
+--- shub_image/utils.py
++++ shub_image/utils.py
+@@ -2,7 +2,7 @@ import os
+ import click
+ import importlib
+ 
+-import ruamel.yaml as yaml
++import ruamel_yaml as yaml
+ 
+ from shub import config as shub_config
+ from shub import utils as shub_utils
