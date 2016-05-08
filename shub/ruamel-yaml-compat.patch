@@ -1,0 +1,38 @@
+diff --git setup.py setup.py
+index 32a0622..0dab5e0 100644
+--- setup.py
++++ setup.py
+@@ -18,7 +18,7 @@ setup(
+     },
+     include_package_data=True,
+     zip_safe=False,
+-    install_requires=['click', 'hubstorage', 'pip', 'requests', 'ruamel.yaml',
++    install_requires=['click', 'hubstorage', 'pip', 'requests', 'ruamel_yaml',
+                       'scrapinghub', 'six'],
+     classifiers=[
+         'Development Status :: 5 - Production/Stable',
+diff --git shub.egg-info/requires.txt shub.egg-info/requires.txt
+index 61c78a7..cadd6e4 100644
+--- shub.egg-info/requires.txt
++++ shub.egg-info/requires.txt
+@@ -2,6 +2,6 @@ click
+ hubstorage
+ pip
+ requests
+-ruamel.yaml
++ruamel_yaml
+ scrapinghub
+ six
+diff --git shub/config.py shub/config.py
+index a5cce4c..20882eb 100644
+--- shub/config.py
++++ shub/config.py
+@@ -6,7 +6,7 @@ from collections import namedtuple
+ 
+ import click
+ import six
+-import ruamel.yaml as yaml
++import ruamel_yaml as yaml
+ 
+ from shub.exceptions import (BadParameterException, BadConfigException,
+                              ConfigParseException, MissingAuthException,
