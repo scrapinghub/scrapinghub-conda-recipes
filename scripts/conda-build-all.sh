@@ -24,13 +24,24 @@ conda buildall $TRAVIS_BUILD_DIR --matrix-conditions "$CONDA_BUILDALL_MATRIX"
 # fine as long we don't have packages with compiled code.
 for META in $TRAVIS_BUILD_DIR/*/meta.yaml; do
   PACKAGE_DIR=$(dirname $META)
+  PACKAGE_CONVERT="$PACKAGE_DIR/convert"
   PACKAGE_FILENAME=$(conda build --output $PACKAGE_DIR)
   # Packages may have been skipped due to skip build flag.
   if [[ $PACKAGE_FILENAME == Skipped* ]]; then
     echo "Skipped $(basename $PACKAGE_DIR)"
   else
-    echo "Converting $PACKAGE_FILENAME to all platforms)"
-    conda convert -q -p all -o $BUILD_OUTPUT $PACKAGE_FILENAME || exit 1
+    # We can convert either to explicit platforms or all of them.
+    if [ -f $PACKAGE_CONVERT ]; then
+      CONVERT_TO=$(cat $PACKAGE_CONVERT)
+    else
+      CONVERT_TO=all
+    fi
+    for PLAT in $CONVERT_TO; do
+      if [ ! "$PLAT" = "none" ]; then
+        echo "Converting $(basename $PACKAGE_FILENAME) to platform: $PLAT"
+        conda convert -q -p $PLAT -o $BUILD_OUTPUT $PACKAGE_FILENAME || exit 1
+      fi
+    done
   fi
 done
 
