@@ -24,7 +24,7 @@ requirements:
     - six
     - shub
     - ruamel_yaml
-    - docker-py >=1.7.0
+    - docker-py >=1.7.0  # [not win]
     - scrapy
 
   run:
@@ -34,7 +34,7 @@ requirements:
     - six
     - shub
     - ruamel_yaml
-    - docker-py >=1.7.0
+    - docker-py >=1.7.0  # [not win]
     - scrapy
 
 test:
