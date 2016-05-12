@@ -1,42 +1,43 @@
 package:
   name: scrapy
-  version: "1.0.6"
+  version: "1.1.0"
 
 source:
-  fn: Scrapy-1.0.6.tar.gz
-  url: https://pypi.python.org/packages/9d/bb/f88948090988641b4b4be26d8865f9668b7d0223b7b27e0ada351d41faaa/Scrapy-1.0.6.tar.gz
-  md5: 92c6d393e5fbf14a90543400e2c620d7
+  fn: Scrapy-1.1.0.tar.gz
+  url: https://github.com/scrapy/scrapy/archive/1.1.0.tar.gz
+  md5: d14ced4ac88934603c92e3954968083f
 
 build:
   entry_points:
     - scrapy = scrapy.cmdline:execute
-
-  skip: True  # [py3k]
-
   number: 0
 
 requirements:
   build:
     - python x.x
     - twisted >=10.0.0
-    - w3lib >=1.8.0
+    - w3lib >=1.14.2
     - queuelib
     - lxml
     - pyopenssl
     - cssselect >=0.9
     - six >=1.5.2
+    - parsel >=0.9.3
+    - pydispatcher >=2.0.5
     - service_identity
     - pywin32  # [win]
 
   run:
     - python x.x
     - twisted >=10.0.0
-    - w3lib >=1.8.0
+    - w3lib >=1.14.2
     - queuelib
     - lxml
     - pyopenssl
     - cssselect >=0.9
     - six >=1.5.2
+    - parsel >=0.9.3
+    - pydispatcher >=2.0.5
     - service_identity
     - pywin32  # [win]
 
