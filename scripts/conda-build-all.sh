@@ -18,7 +18,7 @@ fi
 
 # We let conda-build-all figure out which packages are needed to be build
 # based on the build cache and dependencies graph.
-conda buildall $TRAVIS_BUILD_DIR --matrix-conditions "$CONDA_BUILDALL_MATRIX"
+conda build-all $TRAVIS_BUILD_DIR --matrix-conditions "$CONDA_BUILDALL_MATRIX"
 
 # We now proceed to convert the conda packages to all platforms. This will be
 # fine as long we don't have packages with compiled code.
@@ -29,6 +29,10 @@ for META in $TRAVIS_BUILD_DIR/*/meta.yaml; do
   # Packages may have been skipped due to skip build flag.
   if [[ $PACKAGE_FILENAME == Skipped* ]]; then
     echo "Skipped $(basename $PACKAGE_DIR)"
+  elif [[ ! -f $PACKAGE_FILENAME ]]; then
+    # This happens when recipe has conditional skip:True but output option
+    # doesn't pick the condition.
+    echo "File not found $PACKAGE_FILENAME"
   else
     # We can convert either to explicit platforms or all of them.
     if [ -f $PACKAGE_CONVERT ]; then
