@@ -18,7 +18,7 @@ fi
 
 # We let conda-build-all figure out which packages are needed to be build
 # based on the build cache and dependencies graph.
-conda buildall $TRAVIS_BUILD_DIR --matrix-conditions "$CONDA_BUILDALL_MATRIX"
+conda build-all $TRAVIS_BUILD_DIR --matrix-conditions "$CONDA_BUILDALL_MATRIX"
 
 # We now proceed to convert the conda packages to all platforms. This will be
 # fine as long we don't have packages with compiled code.
