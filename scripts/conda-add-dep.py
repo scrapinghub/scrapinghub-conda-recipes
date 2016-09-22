@@ -63,8 +63,15 @@ def main():
     with change_workdir(args.temp_dir):
         for name in args.deps:
             print("Adding %s as dependency" % name)
-            patch_index(name)
-            patch_recipe(name)
+            try:
+                patch_index(name)
+            except Exception as e:
+                print("Failed to patch index: %s" % str(e))
+
+            try:
+                patch_recipe(name)
+            except Exception as e:
+                print("Failed to patch recipe: %s" % str(e))
 
     if args.output:
         print("Writing to %s" % args.output)
