@@ -28,7 +28,17 @@ def patch_binstar_upload():
                 sys.stdout.write(ans + '\n')
                 return ans
 
+    upload_package_orig = binstar_client.commands.upload.upload_package
+
+    def upload_package_fixed(*args, **kwargs):
+        out = upload_package_orig(*args, **kwargs)
+        if not out:
+            # When not overriding, it returns [] while caller expects tuples.
+            out = ['-unknown-', {}]
+        return out
+
     binstar_client.commands.upload.input = auto_input
+    binstar_client.commands.upload.upload_package = upload_package_fixed
     binstar_client.utils.input = auto_input
 
 
