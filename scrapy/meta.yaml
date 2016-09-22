@@ -1,22 +1,28 @@
+{% set name = "Scrapy" %}
+{% set version = "1.1.2" %}
+{% set hash_type = "md5" %}
+{% set hash_val = "bccf48ff123debc878438ed8fb4d25c9" %}
 package:
-  name: scrapy
-  version: "1.1.1"
+  name: {{ name|lower }}
+  version: {{ version }}
 
 source:
-  fn: Scrapy-1.1.1.tar.gz
-  url: https://pypi.python.org/packages/cd/75/cafb247a6abc6717c9c39888dd81585d9aaacbaf40dff65ed55fa1aa1e11/Scrapy-1.1.1.tar.gz
-  md5: 7869351461570c0df1730bffb3c400de
+  fn: {{ name }}-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  {{ hash_type }}: {{ hash_val }}
 
 build:
   entry_points:
     - scrapy = scrapy.cmdline:execute
   number: 0
 
+# The requirements below shall match the requirements from the target package
+# version.
 requirements:
   build:
     - python x.x
     - twisted >=10.0.0
-    - w3lib >=1.14.2
+    - w3lib >=1.15.0
     - queuelib
     - lxml
     - pyopenssl
@@ -30,7 +36,7 @@ requirements:
   run:
     - python x.x
     - twisted >=10.0.0
-    - w3lib >=1.14.2
+    - w3lib >=1.15.0
     - queuelib
     - lxml
     - pyopenssl
