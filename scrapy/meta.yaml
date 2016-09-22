@@ -1,6 +1,7 @@
 {% set name = "Scrapy" %}
 {% set version = "1.1.1" %}
-{% set md5 = "7869351461570c0df1730bffb3c400de" %}
+{% set hash_type = "md5" %}
+{% set hash_val = "7869351461570c0df1730bffb3c400de" %}
 package:
   name: {{ name|lower }}
   version: {{ version }}
@@ -8,7 +9,7 @@ package:
 source:
   fn: {{ name }}-{{ version }}.tar.gz
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  md5: {{ md5 }}
+  {{ hash_type }}: {{ hash_val }}
 
 build:
   entry_points:
@@ -21,7 +22,7 @@ requirements:
   build:
     - python x.x
     - twisted >=10.0.0
-    - w3lib >=1.14.2
+    - w3lib >=1.15.0
     - queuelib
     - lxml
     - pyopenssl
@@ -35,7 +36,7 @@ requirements:
   run:
     - python x.x
     - twisted >=10.0.0
-    - w3lib >=1.14.2
+    - w3lib >=1.15.0
     - queuelib
     - lxml
     - pyopenssl
