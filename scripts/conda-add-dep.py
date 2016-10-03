@@ -37,12 +37,10 @@ def patch_index(package, filename='info/index.json'):
             data['depends'].append(package)
 
 
-def patch_recipe(package, filename='info/recipe.json'):
+def patch_recipe(package, filename='info/index.json'):
     with patch_json_data(filename) as data:
-        if package not in data['requirements']['build']:
-            data['requirements']['build'].append(package)
-        if package not in data['requirements']['run']:
-            data['requirements']['run'].append(package)
+        if package not in data['depends']:
+            data['depends'].append(package)
 
 
 def main():
